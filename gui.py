@@ -20,3 +20,4 @@ while True:
         case SimpGUI.WIN_CLOSED:
             break
 window.close()
+# Make a change without including \mega other child directories
