@@ -1,9 +1,22 @@
 import functions
-import PySimpleGUI as SGui
+import PySimpleGUI as SimpGUI
 
-label = SGui.Text("Todo: ")
-input_box = SGui.Input(tooltip="Enter a Todo here")
+label = SimpGUI.Text("Todo: ")
+input_box = SimpGUI.Input(tooltip="Enter a Todo here", key="todo")
+add_button = SimpGUI.Button("Add")
 
-window = SGui.Window("GUI Todo App", layout=[[label], [input_box]])
-window.read()
+window = SimpGUI.Window("GUI Todo App",
+                        layout=[[label], [input_box, add_button]],
+                        font=("Times New Roman", 40))
+
+while True:
+    todos = functions.get_todos()
+    event, values = window.read()
+    match event:
+        case "Add":
+            print(values["todo"])
+            todos.append(values["todo"])
+            functions.write_to_file(todos)
+        case SimpGUI.WIN_CLOSED:
+            break
 window.close()
