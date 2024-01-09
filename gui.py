@@ -8,12 +8,13 @@ list_box = SimpGUI.Listbox(values=functions.get_todos(), enable_events=True, siz
                            key="displayed_todos", no_scrollbar=True)
 edit_button = SimpGUI.Button("Edit")
 complete_button = SimpGUI.Button("Complete", key="complete")
+exit_button = SimpGUI.Button("Exit", key="exit")
 
 window = SimpGUI.Window(title="GUI Todo App",
                         layout=[[label],
                                 [input_box, add_button],
                                 [list_box],
-                                [edit_button, complete_button]],
+                                [edit_button, complete_button, exit_button]],
                         font=("Times New Roman", 40))
 
 while True:
@@ -53,6 +54,10 @@ while True:
         case "displayed_todos":
             window["todo"].update(value=values["displayed_todos"][0])
 
+        # Exit conditions
         case SimpGUI.WIN_CLOSED:
             break
+        case "exit":
+            break
+
 window.close()
