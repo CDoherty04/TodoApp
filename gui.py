@@ -1,7 +1,11 @@
 import functions
 import PySimpleGUI as SimpGUI
+import time
 
-label = SimpGUI.Text("Todo: ")
+SimpGUI.theme("Reds")
+
+clock = SimpGUI.Text(time.strftime("%H:%M:%S"), key="clock")
+label = SimpGUI.Text("Type in a todo: ")
 input_box = SimpGUI.Input(tooltip="Enter a Todo here", key="todo")
 add_button = SimpGUI.Button("Add")
 list_box = SimpGUI.Listbox(values=functions.get_todos(), enable_events=True, size=(45, 10),
@@ -11,15 +15,19 @@ complete_button = SimpGUI.Button("Complete", key="complete")
 exit_button = SimpGUI.Button("Exit", key="exit")
 
 window = SimpGUI.Window(title="GUI Todo App",
-                        layout=[[label],
+                        font=("Montserrat", 30),
+                        use_custom_titlebar=True,
+                        titlebar_background_color="Grey",
+                        layout=[[clock],
+                                [label],
                                 [input_box, add_button],
-                                [list_box],
-                                [edit_button, complete_button, exit_button]],
-                        font=("Times New Roman", 40))
+                                [list_box, exit_button],
+                                [edit_button, complete_button]])
 
 while True:
     todos = functions.get_todos()
-    event, values = window.read()
+    event, values = window.read(timeout=100)  # Updates every 100ms or .1 second
+    window["clock"].update(time.strftime("%H:%M:%S"))
 
     match event:
         case "Add":
