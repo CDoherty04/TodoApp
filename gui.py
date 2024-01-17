@@ -1,6 +1,11 @@
 import functions
 import PySimpleGUI as SimpGUI
 import time
+import os
+
+if not os.path.exists("data.txt"):
+    with open("data.txt", "w"):
+        pass
 
 SimpGUI.theme("Reds")
 
@@ -15,9 +20,7 @@ complete_button = SimpGUI.Button("Complete", key="complete")
 exit_button = SimpGUI.Button("Exit", key="exit")
 
 window = SimpGUI.Window(title="GUI Todo App",
-                        font=("Montserrat", 30),
-                        use_custom_titlebar=True,
-                        titlebar_background_color="Grey",
+                        font=("Montserrat", 15),
                         layout=[[clock],
                                 [label],
                                 [input_box, add_button],
@@ -38,8 +41,7 @@ while True:
         case "Edit":
             # If the list is empty or no task selected then the user can't edit
             if not values["displayed_todos"]:
-                # todo: Get this to print on screen
-                print("Select a todo before editing")
+                SimpGUI.popup("Select a task to edit")
                 continue
             # todo: Only edit selected task, even if there's an identical one before
             todos[todos.index(values["displayed_todos"][0])] = values["todo"]
@@ -49,8 +51,7 @@ while True:
         case "complete":
             # If the list is empty or no task selected then the user can't edit
             if not values["displayed_todos"]:
-                # todo: Get this to print on screen
-                print("Select a todo before editing")
+                SimpGUI.popup("Select a task to complete")
                 continue
             # Remove item from list
             todos.pop(todos.index(values["displayed_todos"][0]))
