@@ -23,6 +23,7 @@ def get_todos(file_name=FILE_NAME):
 
 def write_to_file(todos, file_name=FILE_NAME):
     """Takes a list and formats it to a file by line"""
+    todos = [todo.strip() for todo in todos]
     with open(file_name, "w") as file:
         for task in todos:
             file.write(task + "\n")
